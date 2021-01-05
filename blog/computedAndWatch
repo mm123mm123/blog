@@ -1,0 +1,48 @@
+# computed和watch
+```javascript
+var vm = new Vue({
+  el: '#demo',
+  data: {
+    firstName: 'Foo',
+    lastName: 'Bar',
+    fullName: 'Foo Bar'
+  },
+  watch: {
+    firstName: function (val) {
+      this.fullName = val + ' ' + this.lastName
+    },
+    lastName: function (val) {
+      this.fullName = this.firstName + ' ' + val
+    }
+  }
+})
+
+var vm = new Vue({
+  el: '#demo',
+  data: {
+    firstName: 'Foo',
+    lastName: 'Bar'
+  },
+  computed: {
+    fullName: function () {
+      return this.firstName + ' ' + this.lastName
+    }
+  }
+})
+```
+通过代码我们可以发现，watch只能用来监听已有的属性。而computed往往用来通过已有的属性来得到新的属性。
+## computed-计算属性
+计算属性是有缓存的，如果依赖的属性没有变化，就不会重新计算
+## watch-侦听属性
++ deep属性 默认deep值为false，此时如果地址没有改变，就认为对象没有改变，不会检查其内部属性是否更新。如果设置为true，则会去深入检查，内部属性改变，则对象也会被认为改变了
+```
+watch:{
+    o1:function(value,oldValue){},
+    o2(){},
+    o3:[f1,f2]
+    o4:'methodName'
+    o5:{handler:fn,deep:true,immediate:true}
+    'object.a':function(){}
+}
+vm.$watch('xxx',fn,{deep:true,immediate:ture})
+```
